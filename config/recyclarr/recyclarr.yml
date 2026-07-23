@@ -3,27 +3,16 @@ sonarr:
     base_url: http://sonarr:8989
     api_key: ${SONARR_API_KEY}
 
-    quality_definition:
-      type: series
-
     include:
       - template: sonarr-quality-definition-series
 
     delete_old_custom_formats: true
 
-    custom_formats:
-      - trash_ids:
-          - ed38b889b31be83fda192888e2286d83 # FR audio
-        assign_scores_to:
-          - name: WEB-1080p
 
 radarr:
   movies:
     base_url: http://radarr:7878
     api_key: ${RADARR_API_KEY}
-
-    quality_definition:
-      type: movie
 
     include:
       - template: radarr-quality-definition-movie

@@ -72,3 +72,32 @@ services:
 
     logging:
       <<: *default-logging
+
+  # Sonarr
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    restart: unless-stopped
+
+    environment:
+      <<: *common-env
+      PUID: ${PUID}
+      PGID: ${PGID}
+
+    ports:
+      - "${SONARR_PORT}:8989"
+
+    volumes:
+      # Sonarr configuration
+      - ${DOCKER_ROOT}/config/sonarr:/config
+
+      # Media library
+      - ${MEDIA_ROOT}:/media
+
+      # Downloads
+      - ${DOWNLOAD_ROOT}:/downloads
+
+    networks:
+      - media
+
+    logging:
+      <<: *default-logging

@@ -101,3 +101,32 @@ services:
 
     logging:
       <<: *default-logging
+
+  # Radarr
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    restart: unless-stopped
+
+    environment:
+      <<: *common-env
+      PUID: ${PUID}
+      PGID: ${PGID}
+
+    ports:
+      - "${RADARR_PORT}:7878"
+
+    volumes:
+      # Radarr configuration
+      - ${DOCKER_ROOT}/config/radarr:/config
+
+      # Media library
+      - ${MEDIA_ROOT}:/media
+
+      # Downloads
+      - ${DOWNLOAD_ROOT}:/downloads
+
+    networks:
+      - media
+
+    logging:
+      <<: *default-logging

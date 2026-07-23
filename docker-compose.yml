@@ -1,0 +1,55 @@
+name: ugreen-media-stack
+
+# Extensions
+
+x-common-env: &common-env
+  TZ: ${TZ}
+
+x-default-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: ${LOG_MAX_SIZE}
+    max-file: ${LOG_MAX_FILES}
+
+# Networks
+
+networks:
+  media:
+    name: ${DOCKER_NETWORK}
+    driver: bridge
+
+# Services
+
+services:
+
+  # Jellyfin
+
+  jellyfin:
+    image: jellyfin/jellyfin:10.11.0
+    restart: unless-stopped
+
+    environment:
+      <<: *common-env
+
+    ports:
+      - "${JELLYFIN_PORT}:8096"
+
+    volumes:
+      # Jellyfin configuration
+      - ${DOCKER_ROOT}/config/jellyfin:/config
+
+      # Media library
+      - ${MEDIA_ROOT}:/media:ro
+
+      # Transcoding cache
+      - ${DOCKER_ROOT}/config/jellyfin/cache:/cache
+
+    devices:
+      # Intel Quick Sync / VAAPI
+      - /dev/dri:/dev/dri
+
+    networks:
+      - media
+
+    logging:
+      <<: *default-logging

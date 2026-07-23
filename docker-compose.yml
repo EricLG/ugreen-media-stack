@@ -158,7 +158,6 @@ services:
   # Recyclarr
   recyclarr:
     image: ghcr.io/recyclarr/recyclarr:latest
-    restart: unless-stopped
 
     environment:
       <<: *common-env

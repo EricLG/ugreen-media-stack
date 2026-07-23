@@ -2,6 +2,12 @@
 .env
 
 # Runtime data
+config/jellyfin/
+config/prowlarr/
+config/sonarr/
+config/radarr/
+config/rdtclient/
+config/recyclarr/
 backup/
 
 # Logs

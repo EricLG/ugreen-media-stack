@@ -1,7 +1,6 @@
 name: ugreen-media-stack
 
 # Extensions
-
 x-common-env: &common-env
   TZ: ${TZ}
 
@@ -12,18 +11,15 @@ x-default-logging: &default-logging
     max-file: ${LOG_MAX_FILES}
 
 # Networks
-
 networks:
   media:
     name: ${DOCKER_NETWORK}
     driver: bridge
 
 # Services
-
 services:
 
   # Jellyfin
-
   jellyfin:
     image: jellyfin/jellyfin:10.11.0
     restart: unless-stopped
@@ -47,6 +43,29 @@ services:
     devices:
       # Intel Quick Sync / VAAPI
       - /dev/dri:/dev/dri
+
+    networks:
+      - media
+
+    logging:
+      <<: *default-logging
+
+  # Prowlarr
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    restart: unless-stopped
+
+    environment:
+      <<: *common-env
+      PUID: ${PUID}
+      PGID: ${PGID}
+
+    ports:
+      - "${PROWLARR_PORT}:9696"
+
+    volumes:
+      # Prowlarr configuration
+      - ${DOCKER_ROOT}/config/prowlarr:/config
 
     networks:
       - media

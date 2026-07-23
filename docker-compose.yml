@@ -154,3 +154,21 @@ services:
 
     logging:
       <<: *default-logging
+  
+  # Recyclarr
+  recyclarr:
+    image: ghcr.io/recyclarr/recyclarr:latest
+    restart: unless-stopped
+
+    environment:
+      <<: *common-env
+
+    volumes:
+      # Recyclarr configuration
+      - ${DOCKER_ROOT}/config/recyclarr:/config
+
+    networks:
+      - media
+
+    logging:
+      <<: *default-logging

@@ -4,7 +4,7 @@ sonarr:
     api_key: ${SONARR_API_KEY}
 
     include:
-      - template: sonarr-quality-definition-series
+      - template: french-vostfr-bluray-web-1080p
 
     delete_old_custom_formats: true
 
@@ -15,6 +15,6 @@ radarr:
     api_key: ${RADARR_API_KEY}
 
     include:
-      - template: radarr-quality-definition-movie
+      - template: french-vostfr-hd-bluray-web
 
     delete_old_custom_formats: true

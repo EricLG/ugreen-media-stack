@@ -130,3 +130,27 @@ services:
 
     logging:
       <<: *default-logging
+
+  # RDT-Client
+  rdtclient:
+    image: rogerfar/rdtclient:latest
+    restart: unless-stopped
+
+    environment:
+      <<: *common-env
+
+    ports:
+      - "${RDTCLIENT_PORT}:6500"
+
+    volumes:
+      # RDT-Client configuration
+      - ${DOCKER_ROOT}/config/rdtclient:/data/db
+
+      # Downloads
+      - ${DOWNLOAD_ROOT}:/downloads
+
+    networks:
+      - media
+
+    logging:
+      <<: *default-logging
